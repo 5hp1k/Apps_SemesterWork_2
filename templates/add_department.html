@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить департамент</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Добавить департамент</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="title">Название</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="chief">Руководитель</label>
+                <input type="number" class="form-control" id="chief" name="chief" required>
+            </div>
+            <div class="form-group">
+                <label for="members">Члены</label>
+                <input type="text" class="form-control" id="members" name="members" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
+    </div>
+</body>
+</html>
