@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import tensorflow as tf
-import tensorflow as tf
 from tensorflow.keras.layers import Input, BatchNormalization, Reshape, Dense, LeakyReLU, Conv2DTranspose
 from tensorflow.keras.models import Model
+import os
+from datetime import datetime
 
 
 def make_generator_model():
@@ -38,21 +39,24 @@ def make_generator_model():
     return model
 
 
-generator = make_generator_model()
+def generate_and_save_images():
+    generator = make_generator_model()
+    generator.load_weights('saved_weights/generator_weights.h5')
 
-generator.load_weights('saved_weights/generator_weights.h5')
+    input_image = tf.random.normal([1, 100])
 
-
-def generate_and_save_images(model, test_input):
-    predictions = model(test_input, training=False)
+    predictions = generator(input_image, training=False)
     plt.figure(figsize=(12, 12))
     plt.imshow(predictions[0, :, :, 0] * 127.5 + 127.5, cmap='gray')
     plt.axis('off')
-    plt.savefig('results/generated_image.png',
-                bbox_inches='tight', pad_inches=0)
-    plt.show()
 
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f'static/generated_image_{timestamp}.png'
 
-noise = tf.random.normal([1, 100])
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    plt.savefig(filename, bbox_inches='tight', pad_inches=0)
+    plt.close()
 
-generate_and_save_images(generator, noise)
+    print(f"Image saved at: {filename}")
+
+    return filename

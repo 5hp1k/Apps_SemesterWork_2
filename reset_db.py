@@ -27,7 +27,7 @@ print('\nUsers have been successfully added to the database')
 # Добавление изображений
 image_data = [
     Image(title='First Image', author=1, prompt='Первая картинка',
-          generation_date=datetime.now(), rating=5)
+          generation_date=datetime.now(), rating=5, file_path='static/generated_image_20240613_111537.png')
 ]
 
 for image in image_data:

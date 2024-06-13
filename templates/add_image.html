@@ -1,31 +1,38 @@
-<!doctype html>
-<html lang="ru">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Добавить изображение</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1 class="mt-5">Добавить изображение</h1>
-        <form method="POST" action="/add_image" class="mt-4">
+    <div class="container mt-5">
+        <h1 class="text-center">Добавить изображение</h1>
+        {% if generated_image_path %}
+        <div class="text-center mt-4">
+            <h2>Сгенерированное изображение:</h2>
+            <img src="{{ url_for('static', filename=generated_image_path.split('/')[-1]) }}" alt="Generated Image" class="img-fluid mt-3">
+        </div>
+        <form method="POST" action="{{ url_for('add_image') }}" class="mt-4">
             <div class="form-group">
-                <label for="title">Название изображения:</label>
-                <input type="text" class="form-control" id="title" name="title" required>
+                <label for="title">Заголовок:</label>
+                <input type="text" id="title" name="title" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="prompt">Описание (промпт):</label>
-                <input type="text" class="form-control" id="prompt" name="prompt" required>
+                <label for="prompt">Подпись:</label>
+                <textarea id="prompt" name="prompt" class="form-control" required></textarea>
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Добавить изображение</button>
-            </div>
+            <button type="submit" class="btn btn-primary">Добавить изображение</button>
         </form>
-        <form method="POST" action="/generate_image" class="mt-4">
-            <div class="form-group">
-                <button type="submit" class="btn btn-success">Сгенерировать изображение</button>
-            </div>
-        </form>
+        {% else %}
+        <div class="alert alert-warning mt-4" role="alert">
+            Сгенерированное изображение не найдено.
+        </div>
+        {% endif %}
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

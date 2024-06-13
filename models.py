@@ -28,6 +28,7 @@ class Image(Base):
     prompt = Column(String)
     generation_date = Column(DateTime)
     rating = Column(Integer, default=0)
+    file_path = Column(String)
 
     author_user = relationship("User", back_populates="images")
     votes = relationship("Vote", back_populates="image")
