@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
-import numpy as np
 import tensorflow as tf
-from tensorflow.keras.layers import *
+import tensorflow as tf
+from tensorflow.keras.layers import Input, BatchNormalization, Reshape, Dense, LeakyReLU, Conv2DTranspose
 from tensorflow.keras.models import Model
 
 
@@ -38,13 +38,9 @@ def make_generator_model():
     return model
 
 
-# Создаем модель генератора
 generator = make_generator_model()
 
-# Загружаем сохраненные веса
 generator.load_weights('saved_weights/generator_weights.h5')
-
-# Генерация изображений
 
 
 def generate_and_save_images(model, test_input):
@@ -52,5 +48,11 @@ def generate_and_save_images(model, test_input):
     plt.figure(figsize=(12, 12))
     plt.imshow(predictions[0, :, :, 0] * 127.5 + 127.5, cmap='gray')
     plt.axis('off')
-    plt.savefig('generated_image.png', bbox_inches='tight', pad_inches=0)
+    plt.savefig('results/generated_image.png',
+                bbox_inches='tight', pad_inches=0)
     plt.show()
+
+
+noise = tf.random.normal([1, 100])
+
+generate_and_save_images(generator, noise)

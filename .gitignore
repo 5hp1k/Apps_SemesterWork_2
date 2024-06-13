@@ -1,10 +1,11 @@
 *
+!.gitignore
 !*.py
 !*.md
 !*.db
 !*.html
 !*.jpg
 !*.png
+!*.h5
 !/templates
-!/скриншоты
-!.gitignore
+!/saved_weights
