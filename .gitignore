@@ -1,0 +1,10 @@
+*
+!*.py
+!*.md
+!*.db
+!*.html
+!*.jpg
+!*.png
+!/templates
+!/скриншоты
+!.gitignore
