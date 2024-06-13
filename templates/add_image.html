@@ -2,50 +2,29 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Добавить работу</title>
+    <title>Добавить изображение</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">Добавить работу</h1>
-        <form method="POST" action="/add_job" class="mt-4">
+        <h1 class="mt-5">Добавить изображение</h1>
+        <form method="POST" action="/add_image" class="mt-4">
             <div class="form-group">
-                <label for="job">Название работы:</label>
-                <input type="text" class="form-control" id="job" name="job">
-            </div>
-            <div class="form-group">
-                <label for="team_leader">Руководитель команды:</label>
-                <input type="text" class="form-control" id="team_leader" name="team_leader">
+                <label for="title">Название изображения:</label>
+                <input type="text" class="form-control" id="title" name="title" required>
             </div>
             <div class="form-group">
-                <label for="work_size">Объем работы (в часах):</label>
-                <input type="number" class="form-control" id="work_size" name="work_size">
+                <label for="prompt">Описание (промпт):</label>
+                <input type="text" class="form-control" id="prompt" name="prompt" required>
             </div>
             <div class="form-group">
-                <label for="collaborators">Соавторы:</label>
-                <input type="text" class="form-control" id="collaborators" name="collaborators">
+                <button type="submit" class="btn btn-primary">Добавить изображение</button>
             </div>
+        </form>
+        <form method="POST" action="/generate_image" class="mt-4">
             <div class="form-group">
-                <label for="start_date">Дата начала:</label>
-                <input type="date" class="form-control" id="start_date" name="start_date">
+                <button type="submit" class="btn btn-success">Сгенерировать изображение</button>
             </div>
-            <div class="form-group">
-                <label for="end_date">Дата окончания:</label>
-                <input type="date" class="form-control" id="end_date" name="end_date">
-            </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="is_finished" name="is_finished">
-                <label class="form-check-label" for="is_finished">Работа завершена</label>
-            </div>
-            <div class="form-group">
-                <label for="category">Категория работы:</label>
-                <select name="category" id="category">
-                    {% for category in categories %}
-                        <option value="{{ category.id }}">{{ category.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Добавить работу</button>
         </form>
     </div>
 </body>

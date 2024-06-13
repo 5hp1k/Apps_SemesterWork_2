@@ -7,19 +7,19 @@ from models import User, Image, Vote, engine
 app = Flask(__name__)
 app.secret_key = 'top_secret_key'
 
-Session = sessionmaker(bind=engine)
+DataBase_Session = sessionmaker(bind=engine)
 
 
 @app.route('/')
 def index():
-    db_session = Session()
+    db_session = DataBase_Session()
     images = db_session.query(Image).options(
         joinedload(Image.author_user)).all()
     db_session.close()
 
     if 'user_id' in session:
         user_id = session['user_id']
-        db_session = Session()
+        db_session = DataBase_Session()
         user = db_session.query(User).filter_by(id=user_id).first()
         db_session.close()
         return render_template('main_page.html', user=user, images=images)
@@ -50,7 +50,7 @@ def register():
             modified_date=datetime.now()
         )
 
-        db_session = Session()
+        db_session = DataBase_Session()
         db_session.add(new_user)
         db_session.commit()
         db_session.close()
@@ -70,7 +70,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        db_session = Session()
+        db_session = DataBase_Session()
         user = db_session.query(User).filter_by(email=email).first()
 
         if user and check_password_hash(user.hashed_password, password):
@@ -101,7 +101,7 @@ def add_image():
             generation_date=generation_date
         )
 
-        db_session = Session()
+        db_session = DataBase_Session()
         db_session.add(new_image)
         db_session.commit()
         db_session.close()
@@ -116,7 +116,7 @@ def delete_image(image_id):
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
-    db_session = Session()
+    db_session = DataBase_Session()
     image = db_session.query(Image).filter_by(id=image_id).first()
 
     if image and image.author == session['user_id']:
@@ -132,7 +132,7 @@ def upvote(image_id):
         return redirect(url_for('login'))
 
     user_id = session['user_id']
-    db_session = Session()
+    db_session = DataBase_Session()
 
     # Проверка, голосовал ли пользователь за это изображение ранее
     existing_vote = db_session.query(Vote).filter_by(
@@ -166,7 +166,7 @@ def downvote(image_id):
         return redirect(url_for('login'))
 
     user_id = session['user_id']
-    db_session = Session()
+    db_session = DataBase_Session()
 
     # Проверка, голосовал ли пользователь за это изображение ранее
     existing_vote = db_session.query(Vote).filter_by(
