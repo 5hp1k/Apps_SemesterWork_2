@@ -1,13 +1,17 @@
+import os
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, session
 from sqlalchemy.orm import sessionmaker, joinedload
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import User, Image, Vote, engine
 from generate_image import generate_and_save_images
-import os
+from api import api
+
 
 app = Flask(__name__)
 app.secret_key = 'top_secret_key'
+
+app.register_blueprint(api, url_prefix='/api')
 
 DataBase_Session = sessionmaker(bind=engine)
 
@@ -172,7 +176,7 @@ def delete_image(image_id):
     db_session = DataBase_Session()
     image = db_session.query(Image).filter_by(id=image_id).first()
 
-    if image and image.author == session['user_id']:
+    if image and (image.author == session['user_id'] or session['user_id'] == 1):
         if os.path.exists(image.file_path):
             os.remove(image.file_path)
         db_session.delete(image)
